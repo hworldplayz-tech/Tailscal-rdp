@@ -46,10 +46,11 @@ jobs:
         shell: pwsh
         run: |
           $env:TS_AUTHKEY = "${{ secrets.TAILSCALE_AUTH_KEY }}"
-          tailscale up --authkey $env:TS_AUTHKEY --accept-routes --accept-dns=false
-          $ip = tailscale ip -4
-          Write-Host "✅ Connected to Tailscale. Your IP: $ip"
+          $tsPath = "C:\Program Files\Tailscale\tailscale.exe"
 
+          & "$tsPath" up --authkey $env:TS_AUTHKEY --accept-routes --accept-dns=false
+          $ip = & "$tsPath" ip -4
+          Write-Host "✅ Connected to Tailscale. Your IP: $ip"
       # 5. Keep alive
       - name: Keep Session Alive
         shell: pwsh
